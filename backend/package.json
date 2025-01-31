@@ -5,24 +5,35 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/server.js",
+    "db-push": "npx prisma db push",
+    "db-seed": "npx prisma db seed",
+    "db-pull": "npx prisma db pull",
+    "db-generate": "npx prisma generate",
     "dev": "nodemon --exec ts-node src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run db-pull && npm run db-generate && npm run build && node dist/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "@prisma/adapter-neon": "^6.2.1",
+    "@prisma/client": "^6.2.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.10",
+    "@types/passport": "^1.0.17",
+    "@types/passport-google-oauth20": "^2.0.16",
     "nodemon": "^3.1.9",
+    "prisma": "^6.2.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   }
