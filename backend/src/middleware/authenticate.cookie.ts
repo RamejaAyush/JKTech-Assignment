@@ -8,13 +8,12 @@ export const authenticateCookie = (
   next: NextFunction
 ) => {
   logger.info("Authenticating cookie");
-  const token = req.cookies.jwt;
+  const token = req.cookies.jwt || req.headers.jwt;
+  logger.info("Token: ", token);
 
   if (!token) {
     logger.info("No token found in cookies");
-    res
-      .status(401)
-      .json({ status: false, message: "Please login to continue" });
+    res.redirect("/auth/google");
     return;
   }
 

@@ -12,17 +12,28 @@ export const googleStrategy = new GoogleStrategy(
   async (_accessToken, _refreshToken, profile, done) => {
     logger.info("--- Inside googleStrategy ---");
 
+    const email = profile.emails?.[0].value;
+    const displayName = profile.displayName;
+    const photo = profile.photos?.[0].value;
+
+    if (!email) {
+      logger.error("No email found in Google profile!");
+      return done(new Error("No email found in Google profile"), false);
+    }
+
     const existingUser = await prisma.user.findUnique({
-      where: { email: profile.emails?.[0].value },
+      where: { email },
     });
 
     if (existingUser) {
       logger.info("--- User already exists ---");
+
       const updatedUser = await prisma.user.update({
-        where: { email: existingUser.email },
+        where: { email },
         data: {
-          name: profile.displayName,
-          photo: profile.photos?.[0].value,
+          name: displayName,
+          photo,
+          provider: "google",
         },
       });
 
@@ -31,11 +42,13 @@ export const googleStrategy = new GoogleStrategy(
     }
 
     logger.info("--- Creating new user ---");
+
     const newUser = await prisma.user.create({
       data: {
-        email: profile.emails?.[0].value!,
-        name: profile.displayName,
-        photo: profile.photos?.[0].value,
+        email,
+        name: displayName,
+        photo,
+        provider: "google",
       },
     });
 

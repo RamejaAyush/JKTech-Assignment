@@ -41,7 +41,14 @@ authRouter.get(
     });
 
     logger.info("--- Token set as cookie, redirecting to blogs ---");
-    res.redirect("http://localhost:8080/blogs");
+    res.redirect("http://localhost:8080/posts");
     return;
   }
 );
+
+authRouter.get("/logout", (req: Request, res: Response) => {
+  logger.info("--- Inside GET /auth/logout ---");
+  res.clearCookie("jwt");
+  logger.info("--- Logged out ---");
+  res.redirect("http://localhost:8080/health");
+});
