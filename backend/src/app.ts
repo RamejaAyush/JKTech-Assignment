@@ -4,10 +4,12 @@ import "./routes/auth/auth.strategy";
 import { IHealthResponse, IResponse } from "./interfaces/IResponse";
 
 import passport from "passport";
+import cookieParser from "cookie-parser";
 import express, { Application, Request, Response } from "express";
 
 const app: Application = express();
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(passport.initialize());
 app.use(express.urlencoded({ extended: true }));
