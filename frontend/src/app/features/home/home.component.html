@@ -14,8 +14,8 @@
       <p class="post-snippet">{{ post.content | slice : 0 : 100 }}...</p>
       <div class="post-author">
         <img
-          [src]="post.author.photo"
-          alt="{{ post.author.name }}"
+          [src]="post?.author?.photo || '../../../assets/default-avatar.png'"
+          alt="{{ post?.author?.name || 'Default Avatar' }}"
           class="author-photo"
         />
         <span class="author-name">{{ post.author.name }}</span>

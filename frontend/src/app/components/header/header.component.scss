@@ -31,6 +31,16 @@ nav {
     margin-left: 0.5rem;
     padding: 0.5rem 1rem;
     font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #0056b3;
+    }
   }
 }
 

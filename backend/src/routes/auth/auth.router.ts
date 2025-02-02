@@ -41,14 +41,57 @@ authRouter.get(
     });
 
     logger.info("--- Token set as cookie, redirecting to blogs ---");
-    res.redirect("http://localhost:8080/posts");
+    res.redirect("http://localhost:4200");
     return;
   }
 );
 
 authRouter.get("/logout", (req: Request, res: Response) => {
   logger.info("--- Inside GET /auth/logout ---");
+
+  const token = req.cookies.jwt;
+
+  if (!token) {
+    logger.error("--- No token found, user already logged out ---");
+    res.status(400).json({
+      status: false,
+      message: "No active session found",
+    });
+  }
+
   res.clearCookie("jwt");
-  logger.info("--- Logged out ---");
-  res.redirect("http://localhost:8080/health");
+  logger.info("--- Logged out successfully ---");
+  res.status(200).json({
+    status: true,
+    message: "Logged out successfully",
+  });
+});
+
+authRouter.get("/mine", (req: Request, res: Response) => {
+  logger.info("--- Inside GET /auth/mine ---");
+
+  try {
+    const token = req.cookies.jwt;
+
+    if (!token) {
+      logger.error("--- No token found in cookies ---");
+      res.status(401).json({ status: false, message: "No token found" });
+      return;
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
+    logger.info("--- Token verified ---");
+
+    res.status(200).json({
+      status: true,
+      message: "Token verified",
+      user: decoded,
+    });
+  } catch (error: any) {
+    logger.error(error, "Error in GET /auth/mine");
+    res.status(500).json({
+      status: false,
+      message: "Internal server error",
+    });
+  }
 });

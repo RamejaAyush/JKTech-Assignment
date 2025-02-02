@@ -8,7 +8,7 @@ export const authenticateCookie = (
   next: NextFunction
 ) => {
   logger.info("Authenticating cookie");
-  const token = req.cookies.jwt || req.headers.jwt;
+  const token = req.cookies.jwt;
   logger.info("Token: ", token);
 
   if (!token) {

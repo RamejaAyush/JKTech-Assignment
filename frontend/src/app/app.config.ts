@@ -1,6 +1,6 @@
 import { routes } from './app.routes';
 import { provideRouter } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {
   ApplicationConfig,
   importProvidersFrom,
@@ -10,6 +10,7 @@ import {
   withEventReplay,
   provideClientHydration,
 } from '@angular/platform-browser';
+import { UnauthorizedInterceptor } from './interceptors/unauthorized.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,5 +18,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     importProvidersFrom(HttpClientModule),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorizedInterceptor,
+      multi: true,
+    },
   ],
 };
