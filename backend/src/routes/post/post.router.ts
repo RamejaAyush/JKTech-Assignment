@@ -6,32 +6,28 @@ import { authenticateCookie } from "../../middleware/authenticate.cookie";
 
 export const postRouter: Router = express.Router({ mergeParams: true });
 
-postRouter.get(
-  "/",
-  authenticateCookie,
-  async (_req: Request, res: Response) => {
-    try {
-      logger.info("--- Inside GET /blogs ---");
+postRouter.get("/", async (_req: Request, res: Response) => {
+  try {
+    logger.info("--- Inside GET /blogs ---");
 
-      const posts = await prisma.post.findMany({
-        where: { published: true },
-        include: { author: true },
-      });
+    const posts = await prisma.post.findMany({
+      where: { published: true },
+      include: { author: true },
+    });
 
-      res.status(200).json({
-        status: true,
-        message: "Posts retrieved successfully",
-        posts,
-      });
-    } catch (error: any) {
-      logger.error(error, "Error in GET /blogs");
-      res.status(500).json({
-        status: false,
-        message: "Internal server error",
-      });
-    }
+    res.status(200).json({
+      status: true,
+      message: "Posts retrieved successfully",
+      posts,
+    });
+  } catch (error: any) {
+    logger.error(error, "Error in GET /blogs");
+    res.status(500).json({
+      status: false,
+      message: "Internal server error",
+    });
   }
-);
+});
 
 postRouter.get("/:id", async (req: Request, res: Response) => {
   try {

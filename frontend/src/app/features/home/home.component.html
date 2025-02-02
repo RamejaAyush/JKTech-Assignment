@@ -1,1 +1,29 @@
-<p>home works!</p>
+<div class="home-container">
+  <div *ngIf="loading" class="loader">Loading posts...</div>
+  <div *ngIf="!loading && errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!loading && posts.length > 0" class="posts-list">
+    <div
+      *ngFor="let post of posts"
+      class="post-card"
+      (click)="viewPost(post.id)"
+    >
+      <h2 class="post-title">{{ post.title }}</h2>
+      <p class="post-snippet">{{ post.content | slice : 0 : 100 }}...</p>
+      <div class="post-author">
+        <img
+          [src]="post.author.photo"
+          alt="{{ post.author.name }}"
+          class="author-photo"
+        />
+        <span class="author-name">{{ post.author.name }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && posts.length === 0" class="no-posts">
+    No posts available.
+  </div>
+</div>

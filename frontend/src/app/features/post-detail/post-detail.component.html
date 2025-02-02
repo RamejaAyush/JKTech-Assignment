@@ -1,1 +1,34 @@
-<p>post-detail works!</p>
+<div class="post-detail-container" *ngIf="!loading; else loadingTpl">
+  <ng-container *ngIf="post; else errorTpl">
+    <h1 class="post-title">{{ post.title }}</h1>
+    <div class="post-meta">
+      <div class="author-banner">
+        <img
+          [src]="post.author.photo"
+          alt="{{ post.author.name }}"
+          class="author-photo"
+        />
+        <span class="author-name">{{ post.author.name }}</span>
+      </div>
+      <div class="post-dates">
+        <span class="created-date"
+          >Created: {{ post.createdAt | date : "mediumDate" }}</span
+        >
+        <span class="updated-date"
+          >Updated: {{ post.updatedAt | date : "mediumDate" }}</span
+        >
+      </div>
+    </div>
+    <div class="post-content">
+      <p>{{ post.content }}</p>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loader">Loading post...</div>
+</ng-template>
+
+<ng-template #errorTpl>
+  <div class="error">{{ errorMessage || "Post not found." }}</div>
+</ng-template>

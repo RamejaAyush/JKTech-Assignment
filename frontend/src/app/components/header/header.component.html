@@ -1,1 +1,14 @@
-<p>header works!</p>
+<header>
+  <nav>
+    <a routerLink="/" class="logo">MyBlog</a>
+    <input type="text" placeholder="Search..." class="search-input" />
+    <div class="nav-buttons">
+      <button *ngIf="!authService.isLoggedIn()" routerLink="/login">
+        Login
+      </button>
+      <button *ngIf="authService.isLoggedIn()" routerLink="/dashboard">
+        Dashboard
+      </button>
+    </div>
+  </nav>
+</header>
