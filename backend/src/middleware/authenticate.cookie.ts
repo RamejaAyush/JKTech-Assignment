@@ -7,13 +7,17 @@ export const authenticateCookie = (
   res: Response,
   next: NextFunction
 ) => {
-  logger.info("Authenticating cookie");
-  const token = req.cookies.jwt;
-  logger.info("Token: ", token);
+  logger.info("Authenticating token | inside middleware");
+  const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
-    logger.info("No token found in cookies");
-    res.redirect("/auth/google");
+    logger.info("No token found in authorization header | inside middleware");
+    res
+      .status(401)
+      .json({
+        status: false,
+        message: "No token found in authorization header",
+      });
     return;
   }
 
@@ -21,6 +25,7 @@ export const authenticateCookie = (
     logger.info("Verifying token");
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
     req.user = decoded;
+    logger.info("Token verified successfully | inside middleware");
     next();
   } catch (error) {
     logger.error("Token verification failed");

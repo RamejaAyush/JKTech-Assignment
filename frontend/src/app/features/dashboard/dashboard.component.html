@@ -1,1 +1,52 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <h1>My Posts</h1>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loader">
+    <span class="loader-text">Loading your posts...</span>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!loading && errorMessage" class="error-container">
+    <p class="error-message">{{ errorMessage }}</p>
+  </div>
+
+  <!-- Posts Grid -->
+  <ng-container *ngIf="!loading && !errorMessage">
+    <div *ngIf="myPosts.length > 0" class="posts-grid">
+      <div
+        *ngFor="let post of myPosts; trackBy: trackByPostId"
+        class="post-card"
+      >
+        <h2 class="post-title">{{ post.title }}</h2>
+        <p class="post-snippet">
+          {{
+            post.content
+              ? post.content.length > 100
+                ? post.content.slice(0, 100) + "..."
+                : post.content
+              : ""
+          }}
+        </p>
+        <div class="post-footer">
+          <span class="post-date">
+            Created: {{ post.createdAt | date : "mediumDate" }}
+          </span>
+          <button
+            type="button"
+            class="delete-btn"
+            (click)="deletePost(post.id)"
+            [attr.aria-label]="'Delete post: ' + post.title"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="myPosts.length === 0" class="no-posts">
+      <p>You haven't created any posts yet.</p>
+    </div>
+  </ng-container>
+</div>

@@ -10,7 +10,7 @@ import {
   withEventReplay,
   provideClientHydration,
 } from '@angular/platform-browser';
-import { UnauthorizedInterceptor } from './interceptors/unauthorized.interceptor';
+import { AuthInterceptor } from './interceptors/unauthorized.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(HttpClientModule),
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: UnauthorizedInterceptor,
+      useClass: AuthInterceptor,
       multi: true,
     },
   ],

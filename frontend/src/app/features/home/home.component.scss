@@ -2,7 +2,6 @@
   padding: 1rem;
 }
 
-/* Loader and error styles */
 .loader,
 .error {
   text-align: center;
@@ -14,14 +13,12 @@
   color: red;
 }
 
-/* Grid for posts */
 .posts-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
-/* Individual post card */
 .post-card {
   background: #fff;
   padding: 1rem;
@@ -35,20 +32,17 @@
   }
 }
 
-/* Post title styling */
 .post-title {
   margin: 0 0 0.5rem;
   font-size: 1.2rem;
   color: #333;
 }
 
-/* Post snippet styling */
 .post-snippet {
   margin: 0 0 1rem;
   color: #666;
 }
 
-/* Author banner styling */
 .post-author {
   display: flex;
   align-items: center;
@@ -68,10 +62,9 @@
   color: #555;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .posts-list {
-    grid-template-columns: 1fr; // Single column on small screens
+    grid-template-columns: 1fr;
   }
 
   .post-card {

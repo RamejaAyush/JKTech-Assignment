@@ -44,6 +44,12 @@ nav {
   }
 }
 
+.debug {
+  font-size: 0.9rem;
+  color: #333;
+  margin-right: 0.5rem;
+}
+
 @media (max-width: 768px) {
   nav {
     flex-direction: column;

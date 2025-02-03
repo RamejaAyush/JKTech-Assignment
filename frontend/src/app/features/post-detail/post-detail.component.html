@@ -4,19 +4,16 @@
     <div class="post-meta">
       <div class="author-banner">
         <img
-          [src]="post.author.photo"
+          src="https://github.com/RamejaAyush/JKTech-Assignment/blob/main/frontend/src/assets/default-avatar.png?raw=true"
           alt="{{ post.author.name }}"
           class="author-photo"
         />
         <span class="author-name">{{ post.author.name }}</span>
       </div>
       <div class="post-dates">
-        <span class="created-date"
-          >Created: {{ post.createdAt | date : "mediumDate" }}</span
-        >
-        <span class="updated-date"
-          >Updated: {{ post.updatedAt | date : "mediumDate" }}</span
-        >
+        <span class="created-date">
+          {{ post.createdAt | date : "mediumDate" }}
+        </span>
       </div>
     </div>
     <div class="post-content">

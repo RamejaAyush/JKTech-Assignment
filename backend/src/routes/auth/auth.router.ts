@@ -28,20 +28,12 @@ authRouter.get(
     logger.info("--- User data retrieved ---");
     const token = jwt.sign(
       { userId: user.id, email: user.email },
-      process.env.JWT_SECRET || "fallbacksecret",
+      process.env.JWT_SECRET!,
       { expiresIn: "1h" }
     );
 
     logger.info("--- Token generated ---");
-    res.cookie("jwt", token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 3600000,
-    });
-
-    logger.info("--- Token set as cookie, redirecting to blogs ---");
-    res.redirect("http://localhost:4200");
+    res.redirect(`http://localhost:4200/auth/callback?token=${token}`);
     return;
   }
 );
@@ -49,7 +41,7 @@ authRouter.get(
 authRouter.get("/logout", (req: Request, res: Response) => {
   logger.info("--- Inside GET /auth/logout ---");
 
-  const token = req.cookies.jwt;
+  const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
     logger.error("--- No token found, user already logged out ---");
@@ -57,24 +49,25 @@ authRouter.get("/logout", (req: Request, res: Response) => {
       status: false,
       message: "No active session found",
     });
+    return;
   }
 
-  res.clearCookie("jwt");
   logger.info("--- Logged out successfully ---");
   res.status(200).json({
     status: true,
     message: "Logged out successfully",
   });
+  return;
 });
 
 authRouter.get("/mine", (req: Request, res: Response) => {
   logger.info("--- Inside GET /auth/mine ---");
 
   try {
-    const token = req.cookies.jwt;
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-      logger.error("--- No token found in cookies ---");
+      logger.error("--- No token found in authorization header ---");
       res.status(401).json({ status: false, message: "No token found" });
       return;
     }

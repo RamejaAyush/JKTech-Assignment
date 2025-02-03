@@ -3,16 +3,10 @@
     <a routerLink="/" class="logo">MyBlog</a>
     <input type="text" placeholder="Search..." class="search-input" />
     <div class="nav-buttons">
-      <button
-        type="button"
-        *ngIf="!authService.isLoggedIn()"
-        routerLink="/login"
-      >
-        Login
-      </button>
-      <ng-container *ngIf="authService.isLoggedIn()">
+      <button *ngIf="!loggedIn" type="button" (click)="login()">Login</button>
+      <ng-container *ngIf="loggedIn">
         <button type="button" routerLink="/dashboard">Dashboard</button>
-        <button type="button" (click)="authService.logout()">Logout</button>
+        <button type="button" (click)="logout()">Logout</button>
       </ng-container>
     </div>
   </nav>

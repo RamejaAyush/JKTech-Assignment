@@ -5,6 +5,7 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { PostDetailComponent } from './features/post-detail/post-detail.component';
 import { CreatePostComponent } from './features/create-post/create-post.component';
+import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,7 @@ export const routes: Routes = [
         component: CreatePostComponent,
         canActivate: [AuthGuard],
       },
+      { path: 'auth/callback', component: AuthCallbackComponent },
     ],
   },
   { path: '**', redirectTo: '' },

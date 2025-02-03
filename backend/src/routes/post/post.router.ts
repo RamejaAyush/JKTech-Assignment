@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import logger from "../../utils/logger";
 import prisma from "../../utils/prisma";
 import express, { Router, Request, Response } from "express";
@@ -5,6 +6,47 @@ import express, { Router, Request, Response } from "express";
 import { authenticateCookie } from "../../middleware/authenticate.cookie";
 
 export const postRouter: Router = express.Router({ mergeParams: true });
+
+postRouter.get(
+  "/mine",
+  authenticateCookie,
+  async (req: Request, res: Response) => {
+    logger.info("--- Inside GET /blogs/mine ---");
+
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      logger.error("--- No token found | in router ---");
+      res.status(401).json({ status: false, message: "No token found" });
+      return;
+    }
+
+    try {
+      const user: { userId: number; email: string; iat: number; exp: number } =
+        jwt.verify(token, process.env.JWT_SECRET!) as any;
+
+      req.user = user;
+
+      const posts = await prisma.post.findMany({
+        where: { published: true, authorId: user.userId },
+        include: { author: true },
+      });
+
+      res.status(200).json({
+        status: true,
+        message: "Posts retrieved successfully",
+        data: posts,
+      });
+      return;
+    } catch (error: any) {
+      logger.error(error, "Error in GET /blogs/mine");
+      res.status(500).json({
+        status: false,
+        message: "Internal server error",
+      });
+    }
+  }
+);
 
 postRouter.get("/", async (_req: Request, res: Response) => {
   try {
@@ -15,6 +57,7 @@ postRouter.get("/", async (_req: Request, res: Response) => {
       include: { author: true },
     });
 
+    logger.info("--- Posts retrieved successfully ---");
     res.status(200).json({
       status: true,
       message: "Posts retrieved successfully",
