@@ -1,19 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { RouterModule } from '@angular/router';
 import { IPost } from '../../shared/model/post.model';
 import { PostService } from '../../services/post/post.service';
 
 interface PostResponse {
   status: boolean;
   message?: string;
-  posts?: IPost[];
+  data?: IPost[];
 }
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
@@ -23,7 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   myPosts: IPost[] = [];
   private destroy$ = new Subject<void>();
 
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchMyPosts();
@@ -50,7 +52,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           } | null
         ) => {
           this.loading = false;
-
           if (response?.status && response.data) {
             this.myPosts = response.data;
           } else {
@@ -64,6 +65,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
           console.error('Error fetching posts:', error);
         },
       });
+  }
+
+  // New method: Navigate to Post Detail page when a post is clicked.
+  viewPost(postId: number): void {
+    this.router.navigate(['/posts', postId]);
   }
 
   deletePost(postId: number): void {
@@ -88,6 +94,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         },
       });
   }
+
   trackByPostId(index: number, post: IPost): number {
     return post.id;
   }

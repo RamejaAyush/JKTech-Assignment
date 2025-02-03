@@ -1,5 +1,7 @@
 .home-container {
   padding: 1rem;
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
 .loader,
@@ -10,7 +12,7 @@
 }
 
 .error {
-  color: red;
+  color: #ff6b6b;
 }
 
 .posts-list {
@@ -19,28 +21,44 @@
   gap: 1.5rem;
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .post-card {
-  background: #fff;
+  background: #1e1e1e;
   padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  border: 1px solid #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: fadeInUp 0.5s ease-in-out;
 
   &:hover {
     transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.9);
   }
 }
 
 .post-title {
   margin: 0 0 0.5rem;
-  font-size: 1.2rem;
-  color: #333;
+  font-size: 1.4rem;
+  color: #fff;
+  font-weight: bold;
 }
 
 .post-snippet {
   margin: 0 0 1rem;
-  color: #666;
+  color: #b0b0b0;
+  line-height: 1.4;
 }
 
 .post-author {
@@ -55,13 +73,16 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 0.5rem;
+  border: 2px solid #444;
 }
 
 .author-name {
   font-size: 1rem;
-  color: #555;
+  color: #ddd;
+  font-weight: 500;
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .posts-list {
     grid-template-columns: 1fr;
@@ -72,7 +93,7 @@
   }
 
   .post-title {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .post-snippet {

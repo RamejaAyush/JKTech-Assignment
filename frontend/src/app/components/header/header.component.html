@@ -1,11 +1,13 @@
 <header>
   <nav>
     <a routerLink="/" class="logo">MyBlog</a>
-    <input type="text" placeholder="Search..." class="search-input" />
     <div class="nav-buttons">
       <button *ngIf="!loggedIn" type="button" (click)="login()">Login</button>
       <ng-container *ngIf="loggedIn">
         <button type="button" routerLink="/dashboard">Dashboard</button>
+        <button type="button" routerLink="/create-post" class="create-post-btn">
+          Create
+        </button>
         <button type="button" (click)="logout()">Logout</button>
       </ng-container>
     </div>

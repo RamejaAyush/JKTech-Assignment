@@ -1,22 +1,26 @@
 <div class="dashboard-container">
   <h1>My Posts</h1>
 
-  <!-- Loading State -->
+  <div class="dashboard-header">
+    <button type="button" routerLink="/create-post" class="create-post-btn">
+      Create New Post
+    </button>
+  </div>
+
   <div *ngIf="loading" class="loader">
     <span class="loader-text">Loading your posts...</span>
   </div>
 
-  <!-- Error State -->
   <div *ngIf="!loading && errorMessage" class="error-container">
     <p class="error-message">{{ errorMessage }}</p>
   </div>
 
-  <!-- Posts Grid -->
   <ng-container *ngIf="!loading && !errorMessage">
     <div *ngIf="myPosts.length > 0" class="posts-grid">
       <div
         *ngFor="let post of myPosts; trackBy: trackByPostId"
         class="post-card"
+        (click)="viewPost(post.id)"
       >
         <h2 class="post-title">{{ post.title }}</h2>
         <p class="post-snippet">
@@ -35,7 +39,7 @@
           <button
             type="button"
             class="delete-btn"
-            (click)="deletePost(post.id)"
+            (click)="deletePost(post.id); $event.stopPropagation()"
             [attr.aria-label]="'Delete post: ' + post.title"
           >
             Delete

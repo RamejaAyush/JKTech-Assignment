@@ -22,14 +22,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         this.authService.isLoggedIn().subscribe((status) => {
           this.loggedIn = status;
-          console.log('NavigationEnd: login status is', status);
         });
       }
     });
 
     this.authService.isLoggedIn().subscribe((status) => {
       this.loggedIn = status;
-      console.log('Header init: login status is', status);
     });
   }
 
@@ -44,7 +42,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.authService.logout();
-    this.loggedIn = false;
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.error('Error during logout', err);
+        this.router.navigate(['/']);
+      },
+    });
   }
 }

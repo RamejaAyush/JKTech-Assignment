@@ -129,6 +129,7 @@ postRouter.post(
     }
 
     try {
+      logger.info("--- Creating post ---");
       const newPost = await prisma.post.create({
         data: {
           title,
@@ -137,7 +138,13 @@ postRouter.post(
           authorId: user.userId,
         },
       });
-      res.status(201).json(newPost);
+
+      logger.info("--- Post created successfully ---");
+      res.status(201).json({
+        status: true,
+        message: "Post created successfully",
+        post: newPost,
+      });
     } catch (error: any) {
       logger.error(error, "Error in POST /blogs");
       res.status(500).json({

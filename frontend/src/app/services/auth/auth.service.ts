@@ -1,7 +1,7 @@
-import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
+import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,14 +20,12 @@ export class AuthService {
       this.storage = window.sessionStorage;
     }
     const token = this.getToken();
-    console.log('AuthService: initial token', token);
     this.loggedInSubject.next(!!token);
   }
 
   getToken(): string | null {
     if (this.storage) {
       const token = this.storage.getItem('token');
-      console.log('AuthService.getToken():', token);
       return token;
     }
     return null;
@@ -36,7 +34,6 @@ export class AuthService {
   setToken(token: string): void {
     if (this.storage) {
       this.storage.setItem('token', token);
-      console.log('AuthService.setToken() called with:', token);
       this.loggedInSubject.next(true);
     }
   }
@@ -44,7 +41,6 @@ export class AuthService {
   isLoggedIn(): Observable<boolean> {
     const token = this.getToken();
     if (!token) {
-      console.log('AuthService.isLoggedIn(): no token found');
       this.loggedInSubject.next(false);
       return of(false);
     }
@@ -56,7 +52,6 @@ export class AuthService {
       .pipe(
         map((response) => {
           const loggedIn = response.status && !!response.user;
-          console.log('AuthService.isLoggedIn() API returned:', loggedIn);
           this.loggedInSubject.next(loggedIn);
           return loggedIn;
         }),
@@ -68,20 +63,20 @@ export class AuthService {
       );
   }
 
-  logout(): void {
+  logout(): Observable<any> {
     const token = this.getToken();
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    this.http.get(`${this.apiUrl}/auth/logout`, { headers }).subscribe({
-      next: () => {
+    return this.http.get(`${this.apiUrl}/auth/logout`, { headers }).pipe(
+      tap(() => {
         if (this.storage) {
           this.storage.removeItem('token');
         }
-        console.log('AuthService.logout(): token removed');
         this.loggedInSubject.next(false);
-      },
-      error: (err) => {
-        console.error('Logout error', err);
-      },
-    });
+      }),
+      catchError((error) => {
+        console.error('Logout error', error);
+        return of(error);
+      })
+    );
   }
 }
