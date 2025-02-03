@@ -10,7 +10,7 @@
     "db-pull": "npx prisma db pull",
     "db-generate": "npx prisma generate",
     "dev": "nodemon --exec ts-node src/server.ts",
-    "start": "npm run db-pull && npm run db-generate && npm run build && node dist/server.js"
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
