@@ -28,8 +28,11 @@ postRouter.get(
       req.user = user;
 
       const posts = await prisma.post.findMany({
-        where: { published: true, authorId: user.userId },
+        where: { authorId: user.userId },
         include: { author: true },
+        orderBy: {
+          createdAt: "desc",
+        },
       });
 
       res.status(200).json({
@@ -55,6 +58,9 @@ postRouter.get("/", async (_req: Request, res: Response) => {
     const posts = await prisma.post.findMany({
       where: { published: true },
       include: { author: true },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     logger.info("--- Posts retrieved successfully ---");

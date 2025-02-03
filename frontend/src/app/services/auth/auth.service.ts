@@ -72,9 +72,12 @@ export class AuthService {
           this.storage.removeItem('token');
         }
         this.loggedInSubject.next(false);
+        window.location.reload();
       }),
       catchError((error) => {
         console.error('Logout error', error);
+        this.storage?.removeItem('token');
+        this.loggedInSubject.next(false);
         return of(error);
       })
     );

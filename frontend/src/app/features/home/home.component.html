@@ -10,8 +10,6 @@
       class="post-card"
       (click)="viewPost(post.id)"
     >
-      <h2 class="post-title">{{ post.title }}</h2>
-      <p class="post-snippet">{{ post.content | slice : 0 : 100 }}...</p>
       <div class="post-author">
         <img
           src="https://github.com/RamejaAyush/JKTech-Assignment/blob/main/frontend/src/assets/default-avatar.png?raw=true"
@@ -20,6 +18,8 @@
         />
         <span class="author-name">{{ post.author.name }}</span>
       </div>
+      <h2 class="post-title">{{ post.title }}</h2>
+      <p class="post-snippet">{{ post.content | slice : 0 : 100 }}...</p>
     </div>
   </div>
 

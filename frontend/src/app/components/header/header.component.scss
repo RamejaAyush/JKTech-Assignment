@@ -1,11 +1,14 @@
 /* header.component.scss */
 header {
   padding: 1rem;
-  background: #121212;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: #1e1e1e;
+  border-bottom: 1px solid #333;
+  margin-bottom: 2rem;
 }
 
 nav {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -13,83 +16,102 @@ nav {
 }
 
 .logo {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 700;
   text-decoration: none;
   color: #fff;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  transition: color 0.2s;
+
+  &:hover {
+    color: #0095f6;
+  }
 }
 
 .search-input {
   flex: 1;
-  margin: 0 1rem;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #333;
+  max-width: 400px;
+  margin: 0 1.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background-color: #2d2d2d;
+  color: #fff;
   outline: none;
-  transition: transform 0.2s;
+  transition: all 0.2s ease;
 
   &:focus {
-    transform: scale(1.02);
+    border-color: #0095f6;
+    box-shadow: 0 0 0 2px rgba(0, 149, 246, 0.15);
+    transform: none;
+  }
+
+  &::placeholder {
+    color: #888;
   }
 }
 
 .nav-buttons {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
 
   button {
-    margin-left: 0.5rem;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
     border: none;
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #333;
-    border-radius: 20px;
-    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    background-color: transparent;
+    border: 1px solid #0095f6;
+    color: #0095f6;
 
     &:hover {
-      background-color: #fff;
+      color: white;
+      background-color: #1877f2;
       transform: translateY(-2px);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 }
 
-.debug {
-  font-size: 0.9rem;
-  color: #fff;
-  margin-right: 0.5rem;
-}
-
 @media (max-width: 768px) {
+  header {
+    padding: 0.75rem 0.5rem;
+    margin-bottom: 1rem;
+  }
+
   nav {
     flex-direction: column;
-    align-items: center;
+    gap: 0.75rem;
   }
 
   .logo {
-    text-align: center;
-    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
   }
 
   .search-input {
     width: 100%;
-    margin: 0.5rem 0;
+    max-width: none;
+    margin: 0;
+    padding: 0.6rem 1rem;
   }
 
   .nav-buttons {
+    width: 100%;
     justify-content: center;
-    flex-wrap: wrap;
 
     button {
-      flex: 1 1 45%;
-      margin: 0.25rem;
+      flex: 1;
+      padding: 0.5rem 1rem;
       font-size: 0.9rem;
+      max-width: 150px;
     }
   }
 }

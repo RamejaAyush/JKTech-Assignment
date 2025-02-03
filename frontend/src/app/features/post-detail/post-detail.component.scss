@@ -1,54 +1,66 @@
 .post-detail-container {
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 1rem;
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
 .post-title {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  font-weight: bold;
 }
 
 .post-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 1rem;
-  justify-content: space-between;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 .author-banner {
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 
   .author-photo {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 0.5rem;
+    margin-right: 1rem;
+    border: 2px solid #444;
   }
 
   .author-name {
     font-size: 1rem;
-    color: #555;
+    color: #fff;
+    font-weight: 500;
   }
 }
 
 .post-dates {
   font-size: 0.9rem;
-  color: #777;
+  color: #888;
   display: flex;
-  flex-direction: column;
-  text-align: right;
+  align-items: center;
+  border-top: 1px solid #333;
+  padding-top: 1rem;
 }
 
 .post-content {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
   font-size: 1.1rem;
-  line-height: 1.6;
-  color: #444;
+  line-height: 1.7;
+  color: #b0b0b0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 .loader,
@@ -56,21 +68,29 @@
   text-align: center;
   font-size: 1.2rem;
   margin-top: 2rem;
+  color: #b0b0b0;
+}
+
+.error {
+  color: #ff6b6b;
 }
 
 @media (max-width: 768px) {
+  .post-detail-container {
+    padding: 0.5rem;
+  }
+
   .post-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    padding: 0 0.5rem;
   }
 
-  .post-meta {
-    align-items: flex-start;
-  }
-
-  .post-dates {
-    align-self: flex-end;
-    text-align: left;
-    margin-top: 0.5rem;
+  .post-meta,
+  .post-content {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    box-shadow: none;
   }
 
   .author-banner {
@@ -80,11 +100,13 @@
     }
 
     .author-name {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
   }
 
   .post-content {
     font-size: 1rem;
+    line-height: 1.6;
+    padding: 1rem;
   }
 }

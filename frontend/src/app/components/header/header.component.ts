@@ -44,11 +44,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout(): void {
     this.authService.logout().subscribe({
       next: () => {
-        this.router.navigate(['/']);
+        if (this.router.url === '/') {
+          window.location.reload();
+        } else {
+          this.router.navigate(['/']);
+        }
       },
-      error: (err) => {
-        console.error('Error during logout', err);
-        this.router.navigate(['/']);
+      error: () => {
+        window.location.reload();
       },
     });
   }
