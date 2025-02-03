@@ -7,7 +7,6 @@ import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080';
   private storage: Storage | null = null;
   private loggedInSubject = new BehaviorSubject<boolean>(false);
   loggedIn$ = this.loggedInSubject.asObservable();
@@ -46,7 +45,7 @@ export class AuthService {
     }
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     return this.http
-      .get<{ status: boolean; user?: any }>(`${this.apiUrl}/auth/mine`, {
+      .get<{ status: boolean; user?: any }>(`/auth/mine`, {
         headers,
       })
       .pipe(
@@ -66,7 +65,7 @@ export class AuthService {
   logout(): Observable<any> {
     const token = this.getToken();
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.http.get(`${this.apiUrl}/auth/logout`, { headers }).pipe(
+    return this.http.get(`/auth/logout`, { headers }).pipe(
       tap(() => {
         if (this.storage) {
           this.storage.removeItem('token');

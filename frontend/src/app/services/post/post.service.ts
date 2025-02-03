@@ -8,8 +8,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class PostService {
-  private apiUrl = 'http://localhost:8080';
-
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getAllPublishedPosts(): Observable<{
@@ -18,7 +16,7 @@ export class PostService {
     posts: IPost[];
   }> {
     return this.http.get<{ status: boolean; message: string; posts: IPost[] }>(
-      `${this.apiUrl}/posts`
+      `/posts`
     );
   }
 
@@ -28,7 +26,7 @@ export class PostService {
     post: IPost;
   }> {
     return this.http.get<{ status: boolean; message: string; post: IPost }>(
-      `${this.apiUrl}/posts/${postId}`
+      `/posts/${postId}`
     );
   }
 
@@ -51,7 +49,7 @@ export class PostService {
       Authorization: `Bearer ${token}`,
     });
     return this.http.get<{ status: boolean; message: string; posts: IPost[] }>(
-      `${this.apiUrl}/posts/mine`,
+      `/posts/mine`,
       { headers }
     );
   }
@@ -65,7 +63,7 @@ export class PostService {
       Authorization: `Bearer ${this.authService.getToken()}`,
     });
     return this.http.post<{ status: boolean; message: string; post: IPost }>(
-      `${this.apiUrl}/posts`,
+      `/posts`,
       post,
       { headers }
     );
@@ -80,7 +78,7 @@ export class PostService {
       Authorization: `Bearer ${this.authService.getToken()}`,
     });
     return this.http.patch<{ status: boolean; message: string; post: IPost }>(
-      `${this.apiUrl}/posts/${post.id}`,
+      `/posts/${post.id}`,
       post,
       { headers }
     );
@@ -94,7 +92,7 @@ export class PostService {
       Authorization: `Bearer ${this.authService.getToken()}`,
     });
     return this.http.delete<{ status: boolean; message: string }>(
-      `${this.apiUrl}/posts/${postId}`,
+      `/posts/${postId}`,
       { headers }
     );
   }

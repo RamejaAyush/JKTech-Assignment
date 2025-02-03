@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   login(): void {
-    window.location.href = 'http://localhost:8080/auth/google';
+    window.location.href = '/auth/google';
   }
 
   logout(): void {

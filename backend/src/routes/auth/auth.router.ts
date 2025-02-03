@@ -33,7 +33,7 @@ authRouter.get(
     );
 
     logger.info("--- Token generated ---");
-    res.redirect(`http://localhost:4200/auth/callback?token=${token}`);
+    res.redirect(`/auth/callback?token=${token}`);
     return;
   }
 );
