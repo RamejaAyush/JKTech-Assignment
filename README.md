@@ -50,7 +50,7 @@ npm install
 
 ## Development
 
-### Backend
+### Backend Scripts
 
 Available scripts:
 
@@ -71,7 +71,7 @@ npm run db-generate # Generate Prisma client
 npm start
 ```
 
-### Frontend
+### Frontend Scripts
 
 Available scripts:
 
@@ -128,7 +128,7 @@ cd ../frontend
 npm run build
 ```
 
-2. Start the production server:
+1. Start the production server:
 
 ```bash
 # Start backend
